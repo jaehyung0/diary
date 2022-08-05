@@ -9,23 +9,36 @@ class Menu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-              onPressed: () {
-                Get.to(() => const Diary());
-              },
-              child: const Text('업로드')),
-          ElevatedButton(
-              onPressed: () {
-                Get.to(() => const DiaryList());
-              },
-              child: const Text('리스트'))
-        ],
-      ),
-    ));
+    return Container(
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.cover, image: AssetImage('assets/images/beach.jpg'))),
+      child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      Get.to(() => const Diary());
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('업로드', style: TextStyle(fontSize: 40)),
+                    )),
+                const SizedBox(height: 15),
+                ElevatedButton(
+                    onPressed: () {
+                      Get.to(() => const DiaryList());
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('리스트', style: TextStyle(fontSize: 40)),
+                    ))
+              ],
+            ),
+          )),
+    );
   }
 }

@@ -21,7 +21,14 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primaryColor: Colors.lightBlue,
+        progressIndicatorTheme:
+            const ProgressIndicatorThemeData(color: Colors.blueAccent),
+        //textTheme: GoogleFonts.sourceSansProTextTheme()
+        textTheme: const TextTheme(
+          bodyText2: TextStyle(fontFamily: 'Wovud2'),
+          headline6: TextStyle(fontFamily: 'Wovud'),
+        ),
       ),
       home: const MyHomePage(),
     );
