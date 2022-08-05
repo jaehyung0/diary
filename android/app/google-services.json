@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1038284642375",
+    "project_id": "flutter-diary-19942",
+    "storage_bucket": "flutter-diary-19942.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038284642375:android:580ec20f2cb939e418f962",
+        "android_client_info": {
+          "package_name": "com.example.diary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038284642375-70okdq3bi6htn3ke5f4g6mune5g8gu27.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt8Q6a75m_74d7YFyOpcybjHcFMDv3DGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1038284642375-70okdq3bi6htn3ke5f4g6mune5g8gu27.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
