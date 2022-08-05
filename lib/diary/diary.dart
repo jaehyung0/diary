@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Diary extends StatelessWidget {
   const Diary({Key? key}) : super(key: key);
@@ -97,33 +98,43 @@ class _DiaryPageState extends State<DiaryPage> {
                               title = value.toString();
                             })),
                     const SizedBox(height: 10),
-                    Container(
-                      width: MediaQuery.of(context).size.width - 40,
-                      height: MediaQuery.of(context).size.width - 40,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.red)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                              onPressed: () {
-                                _albumImage();
-                              },
-                              child: const Text('앨범')),
-                          ElevatedButton(
-                            onPressed: () {
-                              _pickImage();
-                            },
-                            child: pickedImage != null
-                                ? Image(
-                                    image: FileImage(pickedImage!),
-                                  )
-                                : const Text('사진'),
-                          ),
-                        ],
+                    if (pickedImage == null)
+                      Container(
+                        width: MediaQuery.of(context).size.width - 40,
+                        height: MediaQuery.of(context).size.width - 40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.red)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                                onPressed: () {
+                                  _albumImage();
+                                },
+                                child: const Text('앨범')),
+                            ElevatedButton(
+                                onPressed: () {
+                                  _pickImage();
+                                },
+                                child: const Text('사진')),
+                          ],
+                        ),
                       ),
-                    ),
+                    if (pickedImage != null)
+                      Container(
+                        width: MediaQuery.of(context).size.width - 40,
+                        height: MediaQuery.of(context).size.width - 40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.red)),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image(
+                              image: FileImage(pickedImage!),
+                              fit: BoxFit.fitWidth),
+                        ),
+                      ),
                     const SizedBox(height: 10),
                     SizedBox(
                       width: MediaQuery.of(context).size.width - 40,
@@ -146,6 +157,7 @@ class _DiaryPageState extends State<DiaryPage> {
                     ElevatedButton(
                         onPressed: () async {
                           try {
+                            final user = FirebaseAuth.instance.currentUser;
                             final path = 'files/${userPickedImage!.path}';
 
                             final refImage =
@@ -158,7 +170,8 @@ class _DiaryPageState extends State<DiaryPage> {
                               'title': title,
                               'content': content,
                               'time': Timestamp.now(),
-                              'image': url
+                              'image': url,
+                              'userId': user!.uid
                             });
 
                             Get.snackbar('완료', '업로드완료');

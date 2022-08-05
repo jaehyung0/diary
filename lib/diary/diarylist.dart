@@ -3,6 +3,7 @@ import 'package:diary/diary/diarydetail.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DiaryList extends StatefulWidget {
   const DiaryList({Key? key}) : super(key: key);
@@ -58,48 +59,57 @@ class _DiaryListState extends State<DiaryList> {
                             String title = diaryInfo[index].data()['title'];
                             String content = diaryInfo[index].data()['content'];
                             var image = diaryInfo[index].data()['image'];
-                            return InkWell(
-                              onTap: () {
-                                Get.to(() => const DiaryDetail(), arguments: {
-                                  'title': title,
-                                  'content': content,
-                                  'date': date,
-                                  'image': image
-                                });
-                              },
-                              child: Card(
-                                elevation: 4,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(title,
+                            var id = diaryInfo[index].data()['userId'];
+                            final user = FirebaseAuth.instance.currentUser;
+                            if (id == user!.uid) {
+                              return InkWell(
+                                onTap: () {
+                                  Get.to(() => const DiaryDetail(), arguments: {
+                                    'title': title,
+                                    'content': content,
+                                    'date': date,
+                                    'image': image
+                                  });
+                                },
+                                child: Card(
+                                  elevation: 4,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(title,
+                                                  style: const TextStyle(
+                                                      fontSize: 30,
+                                                      color: Colors.lightBlue)),
+                                              Text(
+                                                date
+                                                    .toString()
+                                                    .substring(0, 19),
                                                 style: const TextStyle(
-                                                    fontSize: 30,
-                                                    color: Colors.lightBlue)),
-                                            Text(
-                                              date.toString().substring(0, 19),
-                                              style: const TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.red),
-                                            )
-                                          ],
+                                                    fontSize: 20,
+                                                    color: Colors.red),
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Text(content,
-                                          style: const TextStyle(fontSize: 25))
-                                    ],
+                                        const SizedBox(height: 10),
+                                        Text(content,
+                                            style:
+                                                const TextStyle(fontSize: 25))
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
                           });
                     })),
           ),
