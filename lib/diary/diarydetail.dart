@@ -42,7 +42,15 @@ class _DiaryDetailState extends State<DiaryDetail> {
                       border: Border.all(color: Colors.red)),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.network(map['image'], fit: BoxFit.fitWidth),
+                    child: Image.network(
+                      map['image'],
+                      fit: BoxFit.fitWidth,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                    ),
                   )),
               const SizedBox(height: 10),
               Container(

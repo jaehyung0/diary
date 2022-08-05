@@ -17,14 +17,16 @@ class _DiaryListState extends State<DiaryList> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('리스트'),
-          leading: const SizedBox(),
           titleSpacing: 0,
           actions: [
             GestureDetector(
                 onTap: () {
                   Get.to(() => const Diary());
                 },
-                child: const Icon(Icons.camera_alt))
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 15),
+                  child: Icon(Icons.camera_alt_outlined),
+                ))
           ],
         ),
         body: SingleChildScrollView(

@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:diary/diary/diarylist.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -35,6 +34,23 @@ class _DiaryPageState extends State<DiaryPage> {
     final imagePicker = ImagePicker();
     final pickedImageFile = await imagePicker.pickImage(
       source: ImageSource.camera,
+      imageQuality: 100,
+      maxHeight: MediaQuery.of(context).size.width - 40,
+    );
+
+    setState(() {
+      if (pickedImageFile != null) {
+        pickedImage = File(pickedImageFile.path);
+      }
+    });
+
+    pickedImageFunc(pickedImage!);
+  }
+
+  void _albumImage() async {
+    final imagePicker = ImagePicker();
+    final pickedImageFile = await imagePicker.pickImage(
+      source: ImageSource.gallery,
       imageQuality: 100,
       maxHeight: MediaQuery.of(context).size.width - 40,
     );
@@ -87,15 +103,25 @@ class _DiaryPageState extends State<DiaryPage> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.red)),
-                      child: TextButton(
-                        onPressed: () {
-                          _pickImage();
-                        },
-                        child: pickedImage != null
-                            ? Image(
-                                image: FileImage(pickedImage!),
-                              )
-                            : const Text('사진'),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                _albumImage();
+                              },
+                              child: const Text('앨범')),
+                          ElevatedButton(
+                            onPressed: () {
+                              _pickImage();
+                            },
+                            child: pickedImage != null
+                                ? Image(
+                                    image: FileImage(pickedImage!),
+                                  )
+                                : const Text('사진'),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -120,9 +146,8 @@ class _DiaryPageState extends State<DiaryPage> {
                     ElevatedButton(
                         onPressed: () async {
                           try {
-                            final user = FirebaseAuth.instance.currentUser;
                             final path = 'files/${userPickedImage!.path}';
-                            final file = File(userPickedImage!.path);
+
                             final refImage =
                                 FirebaseStorage.instance.ref().child(path);
                             await refImage.putFile(userPickedImage!);
@@ -139,12 +164,10 @@ class _DiaryPageState extends State<DiaryPage> {
                             Get.snackbar('완료', '업로드완료');
                             Get.to(() => const DiaryList());
                           } catch (e) {
-                            print(e);
                             if (mounted) {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
-                                content: Text(
-                                    'Please check your email and password'),
+                                content: Text('에러나옴'),
                                 backgroundColor: Colors.blue,
                               ));
                             }
