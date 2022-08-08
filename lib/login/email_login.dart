@@ -47,10 +47,9 @@ class _EmailLoginState extends State<EmailLogin> {
                     label: Text('이메일', style: TextStyle(fontFamily: 'Wovud2')),
                   ),
                   onChanged: (value) {
-                    email = value;
-                  },
-                  onSaved: (value) {
-                    email = value!;
+                    setState(() {
+                      email = value;
+                    });
                   },
                   validator: (value) {
                     if (value!.isEmpty || !value.contains('@')) {
@@ -119,6 +118,9 @@ class _EmailLoginState extends State<EmailLogin> {
                                     'userName': name,
                                     'email': email,
                                   });
+
+                                  Get.snackbar(
+                                      '회원가입', '회원가입이 완료되었습니다. 로그인 해주세요.');
                                 } catch (e) {
                                   print(e);
                                   if (mounted) {
