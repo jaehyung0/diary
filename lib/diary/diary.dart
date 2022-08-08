@@ -175,7 +175,7 @@ class _DiaryPageState extends State<DiaryPage> {
                             });
 
                             Get.snackbar('완료', '업로드완료');
-                            Get.to(() => const DiaryList());
+                            Get.off(() => const DiaryList());
                           } catch (e) {
                             if (mounted) {
                               ScaffoldMessenger.of(context)

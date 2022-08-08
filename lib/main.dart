@@ -1,5 +1,6 @@
 import 'package:diary/diary/menu.dart';
 import 'package:diary/login/login.dart';
+import 'package:diary/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,19 +36,32 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  Future<bool> onWillPop() async {
+    return (await context.showConfirmDialog('확인', '앱을 종료하시겠습니까?',
+        buttonLabel: '종료'));
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return const Menu();
-          } else {
-            return const Login();
-          }
-        });
+    return WillPopScope(
+      onWillPop: onWillPop,
+      child: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Menu();
+            } else {
+              return const Login();
+            }
+          }),
+    );
   }
 }

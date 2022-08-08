@@ -6,6 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
+import 'menu.dart';
+
 class DiaryList extends StatefulWidget {
   const DiaryList({Key? key}) : super(key: key);
 
@@ -20,6 +22,11 @@ class _DiaryListState extends State<DiaryList> {
         appBar: AppBar(
           title: const Text('리스트'),
           titleSpacing: 0,
+          leading: GestureDetector(
+              onTap: () {
+                Get.offAll(() => Menu());
+              },
+              child: const Icon(Icons.arrow_back)),
           actions: [
             GestureDetector(
                 onTap: () {
