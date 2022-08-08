@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class DiaryList extends StatefulWidget {
   const DiaryList({Key? key}) : super(key: key);
@@ -71,6 +72,12 @@ class _DiaryListState extends State<DiaryList> {
                                     'image': image
                                   });
                                 },
+                                /* onLongPress: () {
+                                  FireStorage.instance
+                                      .collection("diary")
+                                      .document(snapshot.data[index]['title'])
+                                      .delete();
+                                },*/
                                 child: Card(
                                   elevation: 4,
                                   child: Padding(
