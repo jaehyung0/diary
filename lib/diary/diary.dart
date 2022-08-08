@@ -53,7 +53,8 @@ class _DiaryPageState extends State<DiaryPage> {
     final pickedImageFile = await imagePicker.pickImage(
       source: ImageSource.gallery,
       imageQuality: 100,
-      maxHeight: MediaQuery.of(context).size.width - 40,
+      maxHeight: 640,
+      maxWidth: 480,
     );
 
     setState(() {

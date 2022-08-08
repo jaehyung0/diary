@@ -44,17 +44,42 @@ class _DiaryDetailState extends State<DiaryDetail> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Colors.red)),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        map['image'],
-                        fit: BoxFit.fitWidth,
-                        loadingBuilder: (BuildContext context, Widget child,
-                            loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        },
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('사진'),
+                                content: SingleChildScrollView(
+                                  child: FittedBox(
+                                    child: Image.network(
+                                      map['image'],
+                                      loadingBuilder: (BuildContext context,
+                                          Widget child, loadingProgress) {
+                                        if (loadingProgress == null)
+                                          return child;
+                                        return const Center(
+                                            child: CircularProgressIndicator());
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          map['image'],
+                          fit: BoxFit.cover,
+                          loadingBuilder: (BuildContext context, Widget child,
+                              loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          },
+                        ),
                       ),
                     )),
                 const SizedBox(height: 10),

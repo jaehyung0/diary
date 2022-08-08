@@ -175,12 +175,25 @@ class _LoginState extends State<Login> {
                     )
                   ],
                 ),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signInAnonymously();
-                  },
-                  child: const Text('게스트 로그인'),
+                const SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.orange)),
+                      onPressed: () {
+                        FirebaseAuth.instance.signInAnonymously();
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text('게스트',
+                            style:
+                                TextStyle(fontSize: 30, fontFamily: 'wovud')),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
