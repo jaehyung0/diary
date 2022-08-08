@@ -72,7 +72,7 @@ class _DiaryListState extends State<DiaryList> {
                               });
                             },
                             child: Card(
-                              elevation: 4,
+                              elevation: 3,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
