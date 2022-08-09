@@ -64,25 +64,25 @@ class _DateCalendarState extends State<DateCalendar> {
   getMemoData() {
     FirebaseFirestore.instance
         .collection('schedule')
+        .where('userId', whereIn: [user!.uid])
         .get()
         .then((QuerySnapshot snapshot) {
-      print(snapshot.docs[0]['memo']);
-      for (int i = 0; i < snapshot.docs.length; i++) {
-        Timestamp time = snapshot.docs[i]['data'];
-        var date = DateTime.fromMillisecondsSinceEpoch(time.seconds * 1000);
-        String memo = snapshot.docs[i]['memo'] ?? '';
-        print(map);
-        if (map.containsKey(date)) {
-          map[date]?.add(Event(memo));
-        } else {
-          List<Event> memoList = [];
-          memoList.add(Event(memo));
-          map.addAll({date: memoList});
-        }
-
-        print(map);
-      }
-    });
+          if (snapshot.toString().isNotEmpty) {
+            for (int i = 0; i < snapshot.docs.length; i++) {
+              Timestamp time = snapshot.docs[i]['data'];
+              var date =
+                  DateTime.fromMillisecondsSinceEpoch(time.seconds * 1000);
+              String memo = snapshot.docs[i]['memo'] ?? '';
+              if (map.containsKey(date)) {
+                map[date]?.add(Event(memo));
+              } else {
+                List<Event> memoList = [];
+                memoList.add(Event(memo));
+                map.addAll({date: memoList});
+              }
+            }
+          }
+        });
   }
 
   @override
@@ -90,7 +90,7 @@ class _DateCalendarState extends State<DateCalendar> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('TableCalendar - Events'),
+        title: const Text('노는 날!'),
       ),
       body: Column(
         children: [
@@ -175,6 +175,9 @@ class _DateCalendarState extends State<DateCalendar> {
             },
           ),
           const SizedBox(height: 8.0),
+          const Text('MEMO',
+              style: TextStyle(fontSize: 20, color: Colors.orange)),
+          const SizedBox(height: 8.0),
           Expanded(
             child: ValueListenableBuilder<List<Event>>(
               valueListenable: _selectedEvents,
@@ -188,12 +191,16 @@ class _DateCalendarState extends State<DateCalendar> {
                         vertical: 4.0,
                       ),
                       decoration: BoxDecoration(
-                        border: Border.all(),
+                        border: Border.all(color: Colors.lightBlue),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: ListTile(
                         onTap: () => print('${value[index]}'),
-                        title: Text('${value[index]}'),
+                        title: Text(
+                          '${value[index]}',
+                          style: const TextStyle(
+                              fontFamily: 'wovud2', color: Colors.pinkAccent),
+                        ),
                       ),
                     );
                   },

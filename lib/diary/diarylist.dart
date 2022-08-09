@@ -76,6 +76,12 @@ class _DiaryListState extends State<DiaryList> {
                               'image': image
                             });
                           },
+                          onLongPress: () {
+                            FirebaseFirestore.instance
+                                .collection('diary')
+                                .doc(diaryInfo[index].id)
+                                .delete();
+                          },
                           child: Card(
                             elevation: 3,
                             child: Padding(
