@@ -54,9 +54,7 @@ class _DateCalendarState extends State<DateCalendar> {
   void _createEvent(DateTime selectedDay, DateTime focusedDay, String memo) {
     List<Event> setEvent = [];
     setState(() {
-      //setEvent.clear();
       setEvent.add(Event(memo));
-      print(setEvent);
       map.addAll({selectedDay: setEvent});
     });
   }
