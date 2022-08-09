@@ -1,3 +1,4 @@
+import 'package:diary/date_calendar/date_calendar.dart';
 import 'package:diary/main.dart';
 import 'package:diary/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
@@ -78,6 +79,15 @@ class _MenuState extends State<Menu> {
                           child: const Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text('리스트', style: TextStyle(fontSize: 40)),
+                          )),
+                      const SizedBox(height: 15),
+                      ElevatedButton(
+                          onPressed: () {
+                            Get.to(() => const DateCalendar());
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text('달력', style: TextStyle(fontSize: 40)),
                           ))
                     ],
                   ),
