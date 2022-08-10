@@ -147,14 +147,19 @@ class _DateCalendarState extends State<DateCalendar> {
                                 }
                                 Navigator.pop(context);
                               },
-                              child: const Text('작성'))
+                              child: const Text('작성')),
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('닫기'))
                         ],
-                        actionsAlignment: MainAxisAlignment.center,
+                        actionsPadding: const EdgeInsets.only(right: 20),
                         content: SizedBox(
                           width: 200,
                           height: 150,
                           child: TextFormField(
-                            minLines: 4,
+                            minLines: 6,
                             maxLines: 10,
                             style: const TextStyle(fontSize: 20),
                             decoration: const InputDecoration(

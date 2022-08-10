@@ -24,7 +24,7 @@ class _DiaryListState extends State<DiaryList> {
           titleSpacing: 0,
           leading: GestureDetector(
               onTap: () {
-                Get.offAll(() => Menu());
+                Get.offAll(() => const Menu());
               },
               child: const Icon(Icons.arrow_back)),
           actions: [
