@@ -50,15 +50,16 @@ class _DiaryDetailState extends State<DiaryDetail> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('사진'),
+                                title: const Text('사진'),
                                 content: SingleChildScrollView(
                                   child: FittedBox(
                                     child: Image.network(
                                       map['image'],
                                       loadingBuilder: (BuildContext context,
                                           Widget child, loadingProgress) {
-                                        if (loadingProgress == null)
+                                        if (loadingProgress == null) {
                                           return child;
+                                        }
                                         return const Center(
                                             child: CircularProgressIndicator());
                                       },

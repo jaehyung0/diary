@@ -9,7 +9,7 @@ import 'diarylist.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Menu extends StatefulWidget {
-  Menu({Key? key}) : super(key: key);
+  const Menu({Key? key}) : super(key: key);
 
   @override
   State<Menu> createState() => _MenuState();
@@ -60,36 +60,98 @@ class _MenuState extends State<Menu> {
                 appBar: AppBar(title: Text('$name의 계정')),
                 backgroundColor: Colors.transparent,
                 body: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                          onPressed: () {
-                            Get.to(() => const Diary());
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text('업로드', style: TextStyle(fontSize: 40)),
-                          )),
-                      const SizedBox(height: 15),
-                      ElevatedButton(
-                          onPressed: () {
-                            Get.to(() => const DiaryList());
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text('리스트', style: TextStyle(fontSize: 40)),
-                          )),
-                      const SizedBox(height: 15),
-                      ElevatedButton(
-                          onPressed: () {
-                            Get.to(() => const DateCalendar());
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text('달력', style: TextStyle(fontSize: 40)),
-                          ))
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 60, bottom: 100, right: 20, left: 20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  Get.to(() => const Diary());
+                                },
+                                borderRadius: BorderRadius.circular(15),
+                                highlightColor: Colors.yellowAccent,
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(color: Colors.cyan)),
+                                  child: FittedBox(
+                                    child: Column(
+                                      children: const [
+                                        Icon(
+                                          Icons.file_upload_rounded,
+                                        ),
+                                        Text('업로드')
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  Get.to(() => const DiaryList());
+                                },
+                                borderRadius: BorderRadius.circular(15),
+                                highlightColor: Colors.yellowAccent,
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(color: Colors.cyan)),
+                                  child: FittedBox(
+                                    child: Column(
+                                      children: const [
+                                        Icon(Icons.list_alt),
+                                        Text('리스트')
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Get.to(() => const DateCalendar());
+                              },
+                              borderRadius: BorderRadius.circular(15),
+                              highlightColor: Colors.yellowAccent,
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.height / 3.5,
+                                width: MediaQuery.of(context).size.width / 2,
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(color: Colors.cyan)),
+                                child: FittedBox(
+                                  child: Column(
+                                    children: const [
+                                      Icon(Icons.calendar_month_sharp),
+                                      Text('달력')
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 floatingActionButton: FloatingActionButton(
